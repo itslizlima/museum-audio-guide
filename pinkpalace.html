@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Pink Palace</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+</head>
+<body>
+    
+    <header>
+        <h1>Bienvenue dans l’audioguide</h1>
+    </header>
+
+    <main>
+        <div class="container">
+        <div class="img">
+            <img src="https://wow.pt/wp-content/uploads/2023/02/Iconografia-WOW-14-150x150.png" alt="pink">
+        </div>
+        </div> 
+       <div id="main">
+            <h2>Pink Palace</h2>
+            <h3>Palais Rose </h3>            
+        </div>
+
+        <div class="circle">
+            <img src="images/room3.jpg" id="trackImage">
+        </div>
+    </main>
+    <span id="musicName"></span>
+
+    <div id="audioPlayer">
+        <audio id="audioElement" controls>
+        <source src="audios/parte1.mp3">
+        </audio>  
+    </div>
+
+
+    <div id="controls">
+        <button id="btnRewind">Avant</button>
+        <button id="btnNext">Suivant</button>
+    </div>
+
+    <script>
+        const audioElement = document.getElementById("audioElement");
+        const btnRewind = document.getElementById("btnRewind");
+        const musicName = document.getElementById("musicName");
+        const btnNext = document.getElementById("btnNext");
+        const trackImage = document.getElementById("trackImage");
+
+        const playlist = [
+            {
+                audio: "audios/parte1.mp3",
+                image: "images/room1.jpg",
+                name: "BIENVENUE AU PALAIS ROSE!"
+                
+            },
+            {
+                audio: "audios/parte2.mp3",
+                image: "images/room2.jpg",
+                name: "ROSE C'EST UN VIN AVEC UNE COULEUR QUE SE SITUE QUELQUE PART ENTRE LE BLANC ET LE ROUGE."
+            },
+            {
+                audio: "audios/parte3.mp3",
+                image: "images/room3.jpg",
+                name: "IL Y A PRÈS DE 140 TEINTS ET NUANCES DE ROSE DIFFÉRENTS."
+            },
+            {
+                audio: "audios/parte4.mp3",
+                image: "images/room4.jpg",
+                name: "COMMENT PRODUIRE VIN."
+            },
+            {
+                audio: "audios/parte5.mp3",
+                image: "images/room5.jpg",
+                name: "LES MÉTHODES DE PRODUCTION LES PLUS COMMUNS"
+            },
+            {
+                audio: "audios/parte6.mp3",
+                image: "images/pink-main.jpg",
+                name: "LES MÉTHODES DE PRODUCTION LES PLUS COMMUNS"
+            },
+     
+        ];
+
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        function loadTrack(index) {
+            const track = playlist[index];
+            audioElement.src = track.audio;
+            audioElement.load();
+            trackImage.src = track.image;
+            musicName.innerHTML = playlist[index].name;
+        }
+
+        loadTrack(currentTrackIndex);
+
+      
+        btnRewind.addEventListener("click", function() {
+            if (currentTrackIndex > 0) {
+                currentTrackIndex--;
+                loadTrack(currentTrackIndex);
+                if (isPlaying) {
+                    audioElement.play();
+                }
+            }
+        });
+
+        btnNext.addEventListener("click", function() {
+            if (currentTrackIndex < playlist.length - 1) {
+                currentTrackIndex++;
+                loadTrack(currentTrackIndex);
+                if (isPlaying) {
+                    audioElement.play();
+                }
+            }
+        });
+
+        audioElement.addEventListener("ended", function() {
+            
+            if (currentTrackIndex < playlist.length - 1) {
+                currentTrackIndex++;
+                loadTrack(currentTrackIndex);
+                if (isPlaying) {
+                    audioElement.play();
+                }
+            } else {
+                isPlaying = false;
+            }
+        });
+
+
+    </script>
+</body>
+<footer>
+    <p>&copy; 2023 Pink Palace Musée. Tous droits réservés.</p>
+</footer>
+</html>
